@@ -2,5 +2,22 @@
 
 </script>
 <template>
-  <h1>Hello from MovieTable</h1>
+    <table class="table-condensed table-hover">
+        <thead>
+            <tr>
+            <th>Title</th>
+            <th>Production Year</th>
+            <th>Cast</th>
+            <th>Genres</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="movie in movies" :key="movie.id">
+            <td>{{movie.title}}</td>
+            <td>{{movie.year}}</td>
+            <td>{{movie.cast}}</td>
+            <td>{{movie.genres}}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
