@@ -11,13 +11,13 @@
         <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="inputProductionFrom">Rok produkcji od:</label>
             <div class="col-sm-8">
-                <input type="text" id=inputProductionFrom class="form-control"  placeholder="Liczba naturalna z przedziału 1900-2019"/>
+                <input type="text" id=inputProductionFrom class="form-control"  placeholder="Liczba naturalna z przedziału 1900-2023"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="inputProductionTo">Rok produkcji do:</label>
             <div class="col-sm-8">
-                <input type="text" id=inputProductionTo class="form-control" placeholder="Liczba naturalna z przedziału 1900-2019"/>
+                <input type="text" id=inputProductionTo class="form-control" placeholder="Liczba naturalna z przedziału 1900-2023"/>
             </div>
         </div>
         <div class="form-group">
