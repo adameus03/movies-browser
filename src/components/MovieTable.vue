@@ -11,6 +11,7 @@ onMounted(() => {
 }) */
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import EventBus from '../eventBus.ts'
 const _ = require('lodash')
 
 const moviesPreprocessed = ref([])
@@ -29,6 +30,9 @@ onMounted(() => {
       }))
       console.log(moviesPreprocessed.value)
     })
+  EventBus.addEventListener('search', (event) => {
+    console.log(event.data)
+  })
 })
 </script>
 <template>

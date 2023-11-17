@@ -1,6 +1,6 @@
 <script setup>
 // import { ref } from 'vue'
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import EventBus from '../eventBus.ts'
 /* const titlePhrase = ref('')
 const startYear = ref(NaN)
@@ -9,10 +9,13 @@ const actorPhrase = ref('') */
 
 const searchParams = reactive({
   titlePhrase: '',
-  startYear: NaN,
-  stopYear: NaN,
+  startYear: '',
+  stopYear: '',
   actorPhrase: ''
 })
+
+const validationFailed = ref(false)
+const validationFailureReason = ref('')
 
 function submitClick () {
   /* EventBus.emit('search', {
@@ -20,12 +23,30 @@ function submitClick () {
     startYear: ststartYear
     //HERE
     }) */
-  EventBus.emit(searchParams.value)
+  if (searchParams.startYear === '' || searchParams === '') {
+    validationFailed.value = true
+    validationFailureReason.value = 'Proszę uzupełnić pola roku produkcji'
+  } else if (isNaN(searchParams.startYear) || isNaN(searchParams.stopYear)) {
+    validationFailed.value = true
+    validationFailureReason.value = 'Rok produkcji ma być liczbą'
+  } else if (Number(searchParams.startYear) < 1900 || Number(searchParams.startYear) > 2023 || Number(searchParams.stopYear) < 1900 || Number(searchParams.stopYear) > 2023) {
+    validationFailed.value = true
+    validationFailureReason.value = 'Rok produkcji ma być między 1900 a 2023'
+  } else {
+    validationFailed.value = false
+    validationFailureReason.value = ''
+    EventBus.emit('search', { ...searchParams })
+  }
 }
 
 </script>
 <template>
     <h1>Baza filmów</h1>
+    <!--<div v-if="validationFailed" class="alert alert-danger alert-dismissible fade show">-->
+    <div v-if="validationFailed" class="alert alert-danger">
+        <strong>Halo, halo!</strong> {{ validationFailureReason }}
+        <!--<button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
+    </div>
     <form>
         <div class="form-group">
             <label for=inputTitle>Tytuł</label>
