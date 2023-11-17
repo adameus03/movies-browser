@@ -39,4 +39,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.table-hover > tbody > tr:hover {
+  background-color: #D2D2D2;
+}
 </style>
