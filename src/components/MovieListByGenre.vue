@@ -1,10 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
+// import { onMounted, ref } from 'vue'
+import { ref, inject } from 'vue'
+// import axios from 'axios'
 const _ = require('lodash')
-
+const commonData = inject('commonData')
 const moviesByGenre = ref([])
-onMounted(() => {
+/* onMounted(() => {
   axios.get('http://localhost:3000/getMovies?start=-100&stop=-1')
     .then((response) => {
       // movies.value = response.data.movies
@@ -25,7 +26,23 @@ onMounted(() => {
         .value()
       console.log(moviesByGenre.value)
     })
-})
+}) */
+const setupData = () => {
+  moviesByGenre.value = _.chain(_.takeRight(commonData.movies, 100))
+    .flatMap(movie => {
+      if (!movie.genres || movie.genres.length === 0) {
+        // return [{ genre: 'No Genre', movie }]
+        return []
+      }
+      // create a separate movie entry for each movie genre
+      return movie.genres.map(genre => ({ genre, movie }))
+    })
+    .groupBy('genre')
+    .map((movies, genre) => ({ genre, movies: movies.map(entry => entry.movie) }))
+    .value()
+  console.log(moviesByGenre.value)
+}
+setupData()
 </script>
 <!--<template>
     <h1>Filmy wg gatunku</h1>
