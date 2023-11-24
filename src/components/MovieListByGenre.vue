@@ -37,8 +37,14 @@ const setupData = () => {
       // create a separate movie entry for each movie genre
       return movie.genres.map(genre => ({ genre, movie }))
     })
+    .orderBy(['movie.title'])
     .groupBy('genre')
     .map((movies, genre) => ({ genre, movies: movies.map(entry => entry.movie) }))
+    .sortBy('genre')
+    /* .sort((a, b) => {
+      console.log(a);
+      return a.genre > b.genre;
+    }) */
     .value()
   console.log(moviesByGenre.value)
 }

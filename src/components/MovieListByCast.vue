@@ -39,6 +39,7 @@ const setupData = () => {
       // create a separate movie entry for each actor in cast
       return movie.cast.map(actor => ({ actor, movie }))
     })
+    .orderBy(['movie.title'])
     .groupBy('actor')
     // .map((movies, actor) => ({ actor, movieCount: movies.length, movies: movies.map(entry => entry.movie) }))
     .map((movies, actor) => ({ actor, movies: movies.map(entry => entry.movie) }))
@@ -47,6 +48,7 @@ const setupData = () => {
     // .map(entry => ({ actor: entry.actor, movies: entry.movies }))
     .filter(entry => entry.movies.length >= 3 && entry.movies.length <= 5)
     .take(100)
+    .sortBy('actor')
     .value()
   console.log(moviesByActor.value)
 }
